@@ -5,12 +5,12 @@ using System.Text;
 
 namespace AdventureTime
 {
-    public class Room 
+    public class Room
     {
         public Room()
         {
-        RoomInventory = new List<Item>();
-        Exits = new List<Exit>();
+            RoomInventory = new List<Item>();
+            Exits = new List<Exit>();
         }
         public List<Item> RoomInventory { get; set; }
         public List<Exit> Exits { get; set; }
@@ -21,7 +21,7 @@ namespace AdventureTime
 
         public void currentDescription()
         {
-            
+
             Console.WriteLine(Description); // Description på rummet
 
             Console.Write("I rummet hittar du : ");

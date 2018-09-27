@@ -3,7 +3,7 @@ Startpunkt - Sovrum
 Du vaknar upp i din säng, lika trött och förvirrad som vanligt och undrar vad fan du heter nu igen: 
 "fyll i namn"
 
-"namn" kollar på klockan och får hjärat i halsgropen, du har försovit dig och har tio minuter på dig innan bussen går..
+"namn" kollar på klockan och får hjärat i halsgropen, det är nämligen bara tio minuter innan bussen går.
 "ljudeffekt", nedräkning påbörjas!
 - Timer börjar
 
@@ -11,13 +11,14 @@ Du flyger upp ur sängen, golvet är kallt.
 
 
 Sovrum: 
+"Du står i sovrum"
 Look: Det är ditt sovrum, den obäddade sängen står mot väggen och bredvid ligger en hög med smutstvätt. 
 Genom fönstret sipprar ett svagt ljus in och lyser upp stolen i hörnet.
 EITEM: Kläder
 KLÄDERD: Det är en blå skjorta, ett par jeans och EN blå högerstrumpa.
 OITEM: Stol, säng, fönster.
-StolD: Den är en ranglig IKEAstol med KLÄDER ovanpå.
-SängD: Det är en standardvit obäddad 90 säng som du köpt billigt på blocket.
+StolD: En ranglig IKEAstol med KLÄDER ovanpå.
+SängD: En standardvit obäddad 90 säng som du köpt billigt på blocket.
 FönsterD: Regnet öser ned utanför fönstret.
 
 

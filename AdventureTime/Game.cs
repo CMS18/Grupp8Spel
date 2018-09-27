@@ -16,17 +16,22 @@ namespace AdventureTime
 
         public Game()
         {
-            Console.WriteLine("Welcome to adventure time");
-            Console.Write("Please enter your name : ");
+            //Console.WriteLine("Welcome to adventure time");
+            Console.WriteLine("Du vaknar upp i din säng, lika trött och förvirrad som vanligt \noch undrar vad fan du heter nu igen..");
+            Console.Write("Skriv in ditt namn: ");
             player.Name = Console.ReadLine();
-            player.CurrentRoom = createWorld.rooms[0];
-            //Console.WriteLine(player.CurrentRoom.Exits[0]);
+            Console.Clear();
+            Console.WriteLine($"{player.Name} kollar på klockan och får hjärat i halsgropen, ");
+            //player.CurrentRoom = createWorld.rooms[0];
+            player.CurrentRoom = createWorld.rooms.Single(x => x.Name == "Sovrum"); // Hämtar det rum som heter "Sovrum", lägger det i current room.
+
             bool gameOver = false;
             Timer t = new Timer(TimerCallback, null, 0, 1000);
             dt1 = DateTime.Now + new TimeSpan(0, 0, 10, 0);
+            Thread.Sleep(50); //För att minska risken att WriteLinen under denna sker innan Timer-Printen
+            Console.WriteLine("Du flyger upp ur sängen, golvet är kallt.");
+            //Console.WriteLine(countDown);//flytta in i första rummets description, bug på om man är snabbare än 1 sekund.
 
-            player.CurrentRoom.currentDescription();
-            Console.WriteLine(countDown);//flytta in i första rummets description, bug på om man är snabbare än 1 sekund.
             while (!gameOver)
             {
                 //Console.WriteLine("hello");
@@ -41,26 +46,16 @@ namespace AdventureTime
             }
         }
 
-        public void TimerCallback(Object o)
+        public void TimerCallback(Object o)//Kör i en separat tråd asynkront, det vill säga parallellt
         {
-            //Console.WriteLine("In TimerCallBack: " + counter);
             DateTime dt2 = DateTime.Now;
-            //Console.WriteLine(dt1.Minute + ":" + dt1.Second);
-            //Console.WriteLine(dt1.Second);
-            //var dt3 = new TimeSpan();
-
-            //dt3 = dt1.Subtract(dt2);
-            //Console.WriteLine(dt3);
             TimeSpan t = dt1 - dt2;
             countDown = string.Format("{0}:{1} tills bussen går!", t.Minutes, t.Seconds);
-            //Console.WriteLine(dt2.TimeOfDay.Minutes + ":" + dt2.TimeOfDay.Seconds);
-            //Console.WriteLine("du har: " + (dt2.TimeOfDay.Minutes - (dt1.TimeOfDay.Minutes-10))+" minuter kvar" + (dt1.TimeOfDay.Seconds - dt2.TimeOfDay.Seconds));
-            //Console.WriteLine(dt2.TimeOfDay);
-            //Console.WriteLine(dt2.TimeOfDay);
-
-
+            if (t.Seconds != 0 && t.Seconds % 59 == 0)
+            {
+                Console.WriteLine(countDown);
+            }
             counter--;
-            //GC.Collect(); //vettefan vad detta är men failar timern kanske den löser det :D
         }
 
         public void searchDirection(string cmd)
@@ -74,7 +69,7 @@ namespace AdventureTime
                     {
                         Console.Clear();
                         player.CurrentRoom = item.newRoom;
-                        Console.WriteLine(player.Name + " entered " + player.CurrentRoom.Name);
+                        Console.WriteLine(player.Name + " står nu i " + player.CurrentRoom.Name);
                         return;
                     }
                     else if (item.isOpen == false)
@@ -85,7 +80,7 @@ namespace AdventureTime
                 }
             }
 
-            Console.WriteLine("You can't go there");
+            Console.WriteLine("Du kan ej gå i den riktningen");
         }
         public void PickUp(string cmd)
         {
@@ -117,7 +112,7 @@ namespace AdventureTime
                 if (cmd.Substring(5) == item.Name.ToUpper())
                 {
 
-                    Console.WriteLine(player.Name + " dropped " + item.Name);
+                    Console.WriteLine(player.Name + " släppte " + item.Name);
 
                     player.CurrentRoom.RoomInventory.Add(item);
                     player.PlayerInventory.Remove(item);
@@ -149,7 +144,7 @@ namespace AdventureTime
                     return;
                 }
             }
-            Console.WriteLine("There is no item by the description of " + cmd.Substring(8));
+            Console.WriteLine("Det finns inget föremål med beskrivningen " + cmd.Substring(8));
 
         }
 
@@ -233,7 +228,7 @@ namespace AdventureTime
                         }
                     }
                 }
-                Console.WriteLine("Did you just make up an item");
+                Console.WriteLine("Du skapade just ett nytt föremål!");
             }
         }
     }
