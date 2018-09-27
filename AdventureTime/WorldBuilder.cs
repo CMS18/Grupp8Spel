@@ -56,8 +56,6 @@ namespace AdventureTime
             Item stolar = new Item() { Name = "STOLAR", Description = "Två stolar i trä som du gjorde på träslöjden i 9an, du är \nfaktiskt ganska stolt över dem.", CanPickUp = false };
             Item kylskåp = new Item() { Name = "KYLSKÅP", Description = "Kylskåpet är mer eller mindre tomt, allt den \ninnehåller är en gammal ketchup som gick ut \nför två månader sen.", CanPickUp = false };
 
-
-
             Room roomSovrum = new Room() { Name = "Sovrum", Description = "Det är ditt sovrum, den obäddade sängen står mot \nväggen och bredvid ligger en hög med smutstvätt. \nGenom fönstret sipprar ett svagt ljus in \noch lyser upp stolen i hörnet." };
             Item kläder = new Item() { Name = "KLÄDER", Description = "Det är en blå skjorta, ett par \njeans och EN blå högerstrumpa.", CanPickUp = true };
             Item stol = new Item() { Name = "STOL", Description = "En ranglig IKEAstol med KLÄDER ovanpå.", CanPickUp = false };
@@ -77,6 +75,9 @@ namespace AdventureTime
             Exit hallToVardagsRum = new Exit() { newRoom = roomVardagsrum, Direction = "VÄSTER", isOpen = true };
             Exit vardagsrumToHall = new Exit() { newRoom = roomHall, Direction = "ÖSTER", isOpen = true };
 
+            Exit kökToHall = new Exit() { newRoom = roomHall, Direction = "VÄSTER", isOpen = true };
+            Exit hallToKök = new Exit() { newRoom = roomKök, Direction = "ÖSTER", isOpen = true };
+
             //Exit vardagsrumToKök = new Exit() { Name = "DOOR", Description = "It's a common wooden door, it seems to be jammed", newRoom = roomKök, Direction = "SÖDER", isOpen = false, UsableWith = "KOFOT" };
             //Exit kökToVardagsrum = new Exit() { newRoom = roomVardagsrum, Direction = "NORR", isOpen = true };
             // Exits ^^
@@ -84,19 +85,28 @@ namespace AdventureTime
 
 
             //ADD ITEM TO ROOM :
-            roomHall.RoomInventory.Add(kofot);
-            roomKök.RoomInventory.Add(tändare);
             roomSovrum.RoomInventory.Add(kläder);
             roomSovrum.RoomInventory.Add(stol);
             roomSovrum.RoomInventory.Add(säng);
             roomSovrum.RoomInventory.Add(fönster);
 
+            roomHall.RoomInventory.Add(kofot);
+
+            roomKök.RoomInventory.Add(tändare);
+            roomKök.RoomInventory.Add(micro);
+            roomKök.RoomInventory.Add(frys);
+            roomKök.RoomInventory.Add(strumpa);
+            roomKök.RoomInventory.Add(köksbord);
+            roomKök.RoomInventory.Add(stolar);
+            roomKök.RoomInventory.Add(kylskåp);
 
             // ADD EXIT TO ROOM :
             roomSovrum.Exits.Add(sovrumToHall);
             roomHall.Exits.Add(hallToSovrum);
             roomHall.Exits.Add(hallToVardagsRum);
             roomVardagsrum.Exits.Add(vardagsrumToHall);
+            roomKök.Exits.Add(kökToHall);
+            roomHall.Exits.Add(hallToKök);
             //roomVardagsrum.Exits.Add(vardagsrumToKök);
             //roomKök.Exits.Add(kökToVardagsrum);
 
