@@ -1,0 +1,60 @@
+﻿Story - Medelsvensson-livet - A morning adventure
+Startpunkt - Sovrum
+Du vaknar upp i din säng, lika trött och förvirrad som vanligt och undrar vad fan du heter nu igen: 
+"fyll i namn"
+
+"namn" kollar på klockan och får hjärat i halsgropen, du har försovit dig och har tio minuter på dig innan bussen går..
+"ljudeffekt", nedräkning påbörjas!
+- Timer börjar
+
+Du flyger upp ur sängen, golvet är kallt. 
+
+
+Sovrum: 
+Look: Det är ditt sovrum, den obäddade sängen står mot väggen och bredvid ligger en hög med smutstvätt. 
+Genom fönstret sipprar ett svagt ljus in och lyser upp stolen i hörnet.
+EITEM: Kläder
+KLÄDERD: Det är en blå skjorta, ett par jeans och EN blå högerstrumpa.
+OITEM: Stol, säng, fönster.
+StolD: Den är en ranglig IKEAstol med KLÄDER ovanpå.
+SängD: Det är en standardvit obäddad 90 säng som du köpt billigt på blocket.
+FönsterD: Regnet öser ned utanför fönstret.
+
+
+Hall - South
+"Du står i hallen"
+Look: En sliten byrå står i en hörnet och krokar för din hemnyckel och paraply sitter på väggen bredvid dörren.
+Under dörren ligger matta.
+OITEMS: Matta (SKOR), Byrå, krokar(PARAPLY).
+MattaD: Det är en "Welcome Home"-matta med röd smutsig text, på mattan står ett par vita sneakers.
+ByråD: Det är en byrå som du fått av din gamla moster, du gillar den inte men hon skulle bli ledsen om du gjorde dig av med den.
+KrokarD: Det är två rostiga krokar, på den ena hänger ett paraply och den andra, där nyckeln brukar hänga, är tom.
+EITEMS: Paraply, skor
+ParaplyD: Detär ett slitet paraply med företagsloggan på. 
+SkorD"look matta" finns bool=true, syns ej när du kollar på hallen men när du kollar på mattan.
+
+
+Köket - East of hall/south of tvättstuga
+"Du står i köket"
+Look: I ena delen av köket står ett köksbord med två stolar och på andra finns en micro, ett kylskåp och en frys.
+OITEMS: Köksbord, stolar, kylskåp.
+KöksbordD: Det är ett runt köksbord, det var ett taktiskt val då du alltid slog i hörnen på ditt förra.
+StolarD: Det är två stolar i trä som du gjorde på träslöjden i 9an, du är faktiskt ganska stolt över dem.
+KylskåpD: Kylskåpet är mer eller mindre tomt, allt den innehåller är en gammal ketchup som gick ut för två månader sen.
+EITEMS: Micro, Frys, strumpa
+MicroD: Det är en micro i vit plast som gulnat lite med åren men som funkar riktigt bra.
+FrysD: Frysdören har fryst igen och går inte att öppna. (paraply + frys = öppen frys)
+FrysND: Dörren öppnas, inuti ligger din andra strumpa.
+Strumpa: En blå ihopfryst vänsterstrumpa som är för kall för att sätta på sig. (strumpa + micro = användbar)
+
+
+Tvättstuga - North of kök
+"Du står i tvättstugan"
+Look: Här finns en tvättmaskin, bredvid tvättmaskinen står en tvättkorg och ett torkställ.
+OITEMS: Tvättkorg, torkställ
+TvättkorgD: tvättkorgen är sliten och så full att sömmarna håller på att spricka.
+TorkställD: ett utvecklingsbart torkställ i metall som håller på att falla ihop.
+EITEMS: Tvättmaskin, fiskpinnar
+TvättmaskinD: en kantstött tvättmaskin som föregående ägare lämnade kvar. Inuti glittrar något, du böjer dig ned och tittar in, 
+du ser en förpackning med frysta fiskpinnar..
+FiskpinnarD: 

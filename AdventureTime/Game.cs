@@ -196,6 +196,10 @@ namespace AdventureTime
                 player.CurrentRoom.currentDescription();
                 Console.WriteLine(countDown);
             }
+            else if (cmd == "HJÄLP")
+            {
+                Console.WriteLine("Lista kommandon: \n* Norr (n)\n* Söder (s)\n* Öster (ö)\n* Väster (v)\n* Väska (i)\n* Ta Upp\n* Kolla På\n* Kasta\n");
+            }
 
 
             else if (useWithSplitter[0] == "ANVÄND" && useWithSplitter[2] == "MED")
