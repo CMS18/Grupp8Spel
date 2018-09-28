@@ -19,7 +19,7 @@ namespace AdventureTime
             //Console.WriteLine("Welcome to adventure time");
             Console.WriteLine("Du vaknar upp i din säng, lika trött och förvirrad som vanligt \noch undrar vad fan du heter nu igen..");
             Console.Write("Skriv in ditt namn: ");
-            player.Name = Console.ReadLine();
+            player.Name = Console.ReadLine().ToUpper();
             Console.Clear();
             Console.WriteLine($"{player.Name} kollar på klockan och får hjärat i halsgropen, ");
             //player.CurrentRoom = createWorld.rooms[0];
@@ -98,21 +98,22 @@ namespace AdventureTime
                     }
                     else
                     {
-                        Console.WriteLine("Du kan inte plocka upp den där");
+                        Console.WriteLine("\nDu kan inte plocka upp den där");
+                        return;
                     }
                 }
-            }
+            } Console.WriteLine("\nDet finns inget där att plocka upp");
 
         }
         public void drop(string cmd)
         {
             foreach (var item in player.PlayerInventory)
             {
-
-                if (cmd.Substring(5) == item.Name.ToUpper())
+                
+                if (cmd.Substring(6) == item.Name.ToUpper())
                 {
 
-                    Console.WriteLine(player.Name + " släppte " + item.Name);
+                    Console.WriteLine(player.Name + " kastade ut " + item.Name);
 
                     player.CurrentRoom.RoomInventory.Add(item);
                     player.PlayerInventory.Remove(item);
@@ -125,13 +126,13 @@ namespace AdventureTime
         }
         public void LookAt(string cmd)
         {
-
+            Console.WriteLine();
             foreach (var item in player.CurrentRoom.RoomInventory)
             {
 
                 if (cmd.Substring(9) == item.Name.ToUpper())
                 {
-                    Console.WriteLine(item.Description);
+                    Console.WriteLine(item.Description+"\n");
                     return;
                 }
             }
@@ -140,11 +141,11 @@ namespace AdventureTime
 
                 if (cmd.Substring(9) == item.Name.ToUpper())
                 {
-                    Console.WriteLine(item.Description);
+                    Console.WriteLine(item.Description + "\n");
                     return;
                 }
             }
-            Console.WriteLine("Det finns inget föremål med beskrivningen " + cmd.Substring(8));
+            Console.WriteLine("Det finns inget föremål med beskrivningen" + cmd.Substring(8));
 
         }
 
@@ -193,7 +194,15 @@ namespace AdventureTime
             }
             else if (cmd == "HJÄLP")
             {
-                Console.WriteLine("Lista kommandon: \n* Norr (n)\n* Söder (s)\n* Öster (ö)\n* Väster (v)\n* Väska (i)\n* Ta Upp\n* Kolla På\n* Kasta\n");
+                Console.WriteLine("\nLista kommandon: \n* Norr   (n) : Du rör dig norrut\n* Söder  (s) : Du rör dig söderut\n* Öster  (ö) : Du rör dig österut\n* Väster (v) : Du rör dig västerut");
+                Console.WriteLine("* Väska  (i) : Visar föremål som spelaren bär på");
+                Console.WriteLine("* Ta Upp     : Tar upp angiviet föremål");
+                Console.WriteLine("* Kasta      : Släpper angivet föremål ur spelarens Väska");
+                Console.WriteLine("* Använd Med : Använder angivet föremål 1 Med angivet föremål 2");
+                Console.WriteLine("* Kolla      : Ger spelaren en rumsbeskrivning");
+                Console.WriteLine("* Kolla På   : Ger spelaren en beskrivning av angivet föremål");
+                Console.WriteLine("");
+                
             }
 
 

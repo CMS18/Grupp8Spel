@@ -20,13 +20,13 @@ namespace AdventureTime
         public void ShowInventory()
         {
             Console.Clear();
-            Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.WriteLine(Name +"s saker\n--------------");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("\n  " +Name +"s SAKER\n  --------------");
             foreach (var item in PlayerInventory)
             {
-                Console.WriteLine(item.Name);
+                Console.WriteLine("   "+item.Name);
             }
-            Console.WriteLine("\n--------------");
+            Console.WriteLine("\n  --------------\n");
             Console.ResetColor();
             
         }
