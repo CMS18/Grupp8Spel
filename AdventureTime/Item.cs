@@ -25,9 +25,9 @@ namespace AdventureTime
             {
                 Name = UpdateName;
                 Description = UpdateDescription;
-                Console.WriteLine("Du satte ihop sakerna");
+                Console.WriteLine("Du satte ihop sakerna.");
             }
-            else Console.WriteLine("Det kommer inte att fungera");
+            else Console.WriteLine("Det kommer inte att fungera.");
         }
     }
 }

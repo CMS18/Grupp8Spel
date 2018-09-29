@@ -69,7 +69,7 @@ namespace AdventureTime
                     {
                         Console.Clear();
                         player.CurrentRoom = exit.newRoom;
-                        Console.WriteLine(player.Name + " står nu i " + player.CurrentRoom.Name);
+                        Console.WriteLine(player.Name + " står nu i " + player.CurrentRoom.Name + ".");
                         return;
                     }
                     else if (exit.isOpen == false)
@@ -81,7 +81,7 @@ namespace AdventureTime
             }
 
 
-            Console.WriteLine("Du kan ej gå i den riktningen");
+            Console.WriteLine("Du kan ej gå i den riktningen.");
         }
 
         public void Open(string cmd)
@@ -119,18 +119,18 @@ namespace AdventureTime
                         }
                         else if ( exit.isOpen == true && exit.isContainer == false)
                         {
-                            Console.WriteLine("Dörren är öppen");
+                            Console.WriteLine("Dörren är öppen.");
                             return;
                         }
                         else if (exit.isOpen == false && exit.isContainer == true)
                         {
-                            Console.WriteLine("Dörren är låst");
+                            Console.WriteLine("Dörren är låst.");
                             return;
                         }
 
                     }
                     else if (cmd.Substring(6) != exit.Name)
-                    { Console.WriteLine("Är du säker på att du angav rätt föremål att öppna"); }
+                    { Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); }
                 
             }
         }
@@ -150,12 +150,12 @@ namespace AdventureTime
                     }
                     else
                     {
-                        Console.WriteLine("\nDu kan inte plocka upp den där");
+                        Console.WriteLine("\nDu kan inte plocka upp den där.");
                         return;
                     }
                 }
             }
-            Console.WriteLine("\nDet finns inget där att plocka upp");
+            Console.WriteLine("\nDet finns inget där att plocka upp.");
 
         }
         public void Drop(string cmd)
@@ -166,7 +166,7 @@ namespace AdventureTime
                 if (cmd.Substring(6) == item.Name.ToUpper())
                 {
 
-                    Console.WriteLine(player.Name + " kastade ut " + item.Name);
+                    Console.WriteLine(player.Name + " kastade ut " + item.Name + ".");
 
                     player.CurrentRoom.RoomInventory.Add(item);
                     player.PlayerInventory.Remove(item);
@@ -198,7 +198,7 @@ namespace AdventureTime
                     return;
                 }
             }
-            Console.WriteLine("Det finns inget föremål med beskrivningen" + cmd.Substring(8));
+            Console.WriteLine("Det finns inget föremål med beskrivningen" + cmd.Substring(8) + ".");
 
         }
 
@@ -255,13 +255,13 @@ namespace AdventureTime
             }
             else if (cmd == "HJÄLP")
             {
-                Console.WriteLine("\nLista kommandon: \n* Norr   (n) : Du rör dig norrut\n* Söder  (s) : Du rör dig söderut\n* Öster  (ö) : Du rör dig österut\n* Väster (v) : Du rör dig västerut");
-                Console.WriteLine("* Väska  (i) : Visar föremål som spelaren bär på");
-                Console.WriteLine("* Ta Upp     : Tar upp angiviet föremål");
-                Console.WriteLine("* Kasta      : Släpper angivet föremål ur spelarens Väska");
-                Console.WriteLine("* Använd Med : Använder angivet föremål 1 Med angivet föremål 2");
-                Console.WriteLine("* Kolla      : Ger spelaren en rumsbeskrivning");
-                Console.WriteLine("* Kolla På   : Ger spelaren en beskrivning av angivet föremål");
+                Console.WriteLine("\nLista kommandon: \n* Norr   (n) : Du rör dig norrut\n* Söder  (s) : Du rör dig söderut\n* Öster  (ö) : Du rör dig österut\n* Väster (v) : Du rör dig västerut.");
+                Console.WriteLine("* Väska  (i) : Visar föremål som spelaren bär på.");
+                Console.WriteLine("* Ta Upp     : Tar upp angiviet föremål.");
+                Console.WriteLine("* Kasta      : Släpper angivet föremål ur spelarens Väska.");
+                Console.WriteLine("* Använd Med : Använder angivet föremål 1 Med angivet föremål 2.");
+                Console.WriteLine("* Kolla      : Ger spelaren en rumsbeskrivning.");
+                Console.WriteLine("* Kolla På   : Ger spelaren en beskrivning av angivet föremål.");
                 Console.WriteLine("");
 
             }

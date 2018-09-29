@@ -28,7 +28,7 @@ namespace AdventureTime
             if (item == UsableWith)
             {
                 isOpen = true;
-                Console.WriteLine("Du öppnade dörren");
+                Console.WriteLine("Dörren går nu att öppna");
             }
             else Console.WriteLine("Det kommer inte att gå");
         }
