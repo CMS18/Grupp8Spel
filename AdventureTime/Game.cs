@@ -58,29 +58,81 @@ namespace AdventureTime
             counter--;
         }
 
-        public void searchDirection(string cmd)
+        public void SearchDirection(string cmd)
         {
-            foreach (var item in player.CurrentRoom.Exits)
+            foreach (var exit in player.CurrentRoom.Exits)
             {
 
-                if (item.Direction == cmd)
+                if (exit.Direction == cmd)
                 {
-                    if (item.isOpen == true)
+                    if (exit.isOpen == true && exit.isContainer == false)
                     {
                         Console.Clear();
-                        player.CurrentRoom = item.newRoom;
+                        player.CurrentRoom = exit.newRoom;
                         Console.WriteLine(player.Name + " står nu i " + player.CurrentRoom.Name);
                         return;
                     }
-                    else if (item.isOpen == false)
+                    else if (exit.isOpen == false)
                     {
-                        Console.WriteLine(item.Description);
+                        Console.WriteLine(exit.Description);
                         return;
                     }
                 }
             }
 
+
             Console.WriteLine("Du kan ej gå i den riktningen");
+        }
+
+        public void Open(string cmd)
+        {
+            
+            foreach (var exit in player.CurrentRoom.Exits)
+            {
+                
+               
+                    
+                   if (cmd.Substring(6) == exit.Name)
+                    {
+                        
+                        if (exit.isOpen == true && exit.isContainer == true)
+                        {
+                            player.CurrentRoom = exit.newRoom;
+
+                           
+                            Console.Clear();
+                            Console.WriteLine(player.Name + " Har öppnat " + player.CurrentRoom.Name);
+                            Console.WriteLine(player.CurrentRoom.Name + " innehåll:");
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("__________________\n");
+                            Console.ResetColor();
+                            foreach (var item2 in player.CurrentRoom.RoomInventory)
+                            {
+                                Console.WriteLine(item2.Name);
+                            }
+                            
+                            Console.ForegroundColor = ConsoleColor.Blue;
+                            Console.WriteLine("__________________");
+                            Console.ResetColor();
+
+                            return;
+                        }
+                        else if ( exit.isOpen == true && exit.isContainer == false)
+                        {
+                            Console.WriteLine("Dörren är öppen");
+                            return;
+                        }
+                        else if (exit.isOpen == false && exit.isContainer == true)
+                        {
+                            Console.WriteLine("Dörren är låst");
+                            return;
+                        }
+
+                    }
+                    else if (cmd.Substring(6) != exit.Name)
+                    { Console.WriteLine("Är du säker på att du angav rätt föremål att öppna"); }
+                
+            }
         }
         public void PickUp(string cmd)
         {
@@ -102,14 +154,15 @@ namespace AdventureTime
                         return;
                     }
                 }
-            } Console.WriteLine("\nDet finns inget där att plocka upp");
+            }
+            Console.WriteLine("\nDet finns inget där att plocka upp");
 
         }
-        public void drop(string cmd)
+        public void Drop(string cmd)
         {
             foreach (var item in player.PlayerInventory)
             {
-                
+
                 if (cmd.Substring(6) == item.Name.ToUpper())
                 {
 
@@ -132,7 +185,7 @@ namespace AdventureTime
 
                 if (cmd.Substring(9) == item.Name.ToUpper())
                 {
-                    Console.WriteLine(item.Description+"\n");
+                    Console.WriteLine(item.Description + "\n");
                     return;
                 }
             }
@@ -156,19 +209,19 @@ namespace AdventureTime
             string[] useWithSplitter = cmd.Split(' ');
             if (cmd == "NORR" || cmd == "N")
             {
-                searchDirection("NORR");
+                SearchDirection("NORR");
             }
             else if (cmd == "SÖDER" || cmd == "S")
             {
-                searchDirection("SÖDER");
+                SearchDirection("SÖDER");
             }
             else if (cmd == "ÖSTER" || cmd == "Ö")
             {
-                searchDirection("ÖSTER");
+                SearchDirection("ÖSTER");
             }
             else if (cmd == "VÄSTER" || cmd == "V")
             {
-                searchDirection("VÄSTER");
+                SearchDirection("VÄSTER");
             }
             else if (cmd.Length >= 7 && cmd.Substring(0, 7) == "TA UPP ") // Subsstring kollar första 7 charsen i strängen
             {
@@ -184,7 +237,15 @@ namespace AdventureTime
             }
             else if (cmd.Length >= 6 && cmd.Substring(0, 6) == "KASTA ")
             {
-                drop(cmd);
+                Drop(cmd);
+            }
+            else if (cmd.Length>= 6 && cmd.Substring(0,6) == "ÖPPNA ")
+            {
+                Open(cmd);
+            }
+            else if (cmd == "STÄNG")
+            {
+                SearchDirection(cmd);
             }
             else if (cmd == "KOLLA")
             {
@@ -202,7 +263,7 @@ namespace AdventureTime
                 Console.WriteLine("* Kolla      : Ger spelaren en rumsbeskrivning");
                 Console.WriteLine("* Kolla På   : Ger spelaren en beskrivning av angivet föremål");
                 Console.WriteLine("");
-                
+
             }
 
 
@@ -237,7 +298,7 @@ namespace AdventureTime
                         }
                     }
                 }
-                Console.WriteLine("Du skapade just ett nytt föremål!");
+                Console.WriteLine("Tänkte du rätt nu?!");
             }
         }
     }

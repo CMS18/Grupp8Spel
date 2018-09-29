@@ -19,6 +19,8 @@ namespace AdventureTime
 
         public Room newRoom { get; set; }
 
+        public bool isContainer { get; set; }
+
         public string UsableWith { get; set; }
 
         public void usedWith(string item)
