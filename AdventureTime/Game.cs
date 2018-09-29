@@ -263,18 +263,15 @@ namespace AdventureTime
                 Console.WriteLine("* Kolla      : Ger spelaren en rumsbeskrivning.");
                 Console.WriteLine("* Kolla På   : Ger spelaren en beskrivning av angivet föremål.");
                 Console.WriteLine("");
-
             }
 
 
             else if (useWithSplitter[0] == "ANVÄND" && useWithSplitter[2] == "MED")
             {
-                //Console.WriteLine(useWithSplitter[1]);
-                //Console.WriteLine(useWithSplitter[3]);
                 Item item1 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[1]); //Hämta det item som stämmer överens med kombinationen
                 Item item2 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[3]); //Hämta det item som stämmer överens med kombinationen
 
-                if(item1 == null || item2 == null)
+                if (item1 == null)
                 {
                     Console.WriteLine("Du saknar föremål för att utföra det här.");
                 }
@@ -292,12 +289,18 @@ namespace AdventureTime
                             }
 
                         }
-
-
-                        if (useWithSplitter[3] == item2.Name)
+                        if (item2 == null)
                         {
+                            Console.WriteLine("Du saknar föremål för att utföra det här.");
+                        }
+                        else if (useWithSplitter[3] == item2.Name)
+                        {
+                            /*Skulle man bara byta ut namn på item.name = till trorr strumpa kan man i inventory råka få strykjärn utbytt mot torr stumpa
+                             * istället för blöt strumpa utbytt mot torr strumpa
+                             * därför kan det vara smart att låta båda föremålen bli "förbrukade" och lämna kvar ett nytt föremål */
+
                             var newCombinedItem = item2.usedWith(item1);
-                            if(newCombinedItem != null)
+                            if (newCombinedItem != null)
                             {
                                 player.PlayerInventory.Remove(item1);
                                 player.PlayerInventory.Remove(item2);
@@ -309,6 +312,49 @@ namespace AdventureTime
                     Console.WriteLine("Tänkte du rätt nu?!");
                 }
             }
+
+            //Sparar Gamla koden
+            //else if (useWithSplitter[0] == "ANVÄND" && useWithSplitter[2] == "MED")
+            //{
+            //    //Console.WriteLine(useWithSplitter[1]);
+            //    //Console.WriteLine(useWithSplitter[3]);
+            //    foreach (var item in player.PlayerInventory)
+            //    {
+            //        //Console.WriteLine(item.Name);
+            //        if (useWithSplitter[1] == item.Name)
+            //        {
+            //            foreach (var exit in player.CurrentRoom.Exits)
+            //            {
+            //                //Console.WriteLine(exit);
+            //                if (useWithSplitter[3] == exit.Name)
+            //                {
+            //                    exit.usedWith(useWithSplitter[1]);
+            //                    return;
+            //                }
+
+            //            }
+
+            //            foreach (var item2 in player.PlayerInventory)
+            //            {
+            //                if (useWithSplitter[3] == item2.Name)
+            //                {
+            //                    item2.usedWith(useWithSplitter[1]);
+            //                    return;
+            //                }
+
+            //            }
+            //        }
+            //    }
+            //    Console.WriteLine("Tänkte du rätt nu?!");
+            //}
+
+
+
+
+
+
+
+
         }
     }
 }
