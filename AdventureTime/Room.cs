@@ -24,12 +24,12 @@ namespace AdventureTime
 
             Console.WriteLine(Description); // Beskrivning på rummet
 
-            Console.Write("I rummet hittar du : ");
+            Console.Write("\nI rummet hittar du : ");
             for (int i = 0; i < RoomInventory.Count; i++)
             {
                 Console.Write(RoomInventory[i].Name + " ");
             }
-            Console.WriteLine("\nDörrar:");
+            Console.WriteLine("\n\nDörrar:");
             for (int i = 0; i < Exits.Count; i++)
             {
                 Console.WriteLine(Exits[i].Name + " ");

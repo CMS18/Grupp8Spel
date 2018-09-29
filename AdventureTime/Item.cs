@@ -19,15 +19,16 @@ namespace AdventureTime
 
         public string UsableWith { get; set; }
 
-        public void usedWith(string item)
+        public Item usedWith(Item item)
         {
-            if (item == UsableWith)
+            if (item.Name == UsableWith)
             {
-                Name = UpdateName;
-                Description = UpdateDescription;
                 Console.WriteLine("Du satte ihop sakerna.");
+                return new Item { Name = item.UpdateName, Description = item.UpdateDescription };
             }
             else Console.WriteLine("Det kommer inte att fungera.");
+
+            return null;
         }
     }
 }

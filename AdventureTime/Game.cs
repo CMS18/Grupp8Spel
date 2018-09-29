@@ -86,52 +86,52 @@ namespace AdventureTime
 
         public void Open(string cmd)
         {
-            
+
             foreach (var exit in player.CurrentRoom.Exits)
             {
-                
-               
-                    
-                   if (cmd.Substring(6) == exit.Name)
+
+
+
+                if (cmd.Substring(6) == exit.Name)
+                {
+
+                    if (exit.isOpen == true && exit.isContainer == true)
                     {
-                        
-                        if (exit.isOpen == true && exit.isContainer == true)
-                        {
-                            player.CurrentRoom = exit.newRoom;
+                        player.CurrentRoom = exit.newRoom;
 
-                           
-                            Console.Clear();
-                            Console.WriteLine(player.Name + " Har öppnat " + player.CurrentRoom.Name);
-                            Console.WriteLine(player.CurrentRoom.Name + " innehåll:");
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.WriteLine("__________________\n");
-                            Console.ResetColor();
-                            foreach (var item2 in player.CurrentRoom.RoomInventory)
-                            {
-                                Console.WriteLine(item2.Name);
-                            }
-                            
-                            Console.ForegroundColor = ConsoleColor.Blue;
-                            Console.WriteLine("__________________");
-                            Console.ResetColor();
 
-                            return;
-                        }
-                        else if ( exit.isOpen == true && exit.isContainer == false)
+                        Console.Clear();
+                        Console.WriteLine(player.Name + " Har öppnat " + player.CurrentRoom.Name);
+                        Console.WriteLine(player.CurrentRoom.Name + " innehåll:");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("__________________\n");
+                        Console.ResetColor();
+                        foreach (var item2 in player.CurrentRoom.RoomInventory)
                         {
-                            Console.WriteLine("Dörren är öppen.");
-                            return;
-                        }
-                        else if (exit.isOpen == false && exit.isContainer == true)
-                        {
-                            Console.WriteLine("Dörren är låst.");
-                            return;
+                            Console.WriteLine(item2.Name);
                         }
 
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("__________________");
+                        Console.ResetColor();
+
+                        return;
                     }
-                    else if (cmd.Substring(6) != exit.Name)
-                    { Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); }
-                
+                    else if (exit.isOpen == true && exit.isContainer == false)
+                    {
+                        Console.WriteLine("Dörren är öppen.");
+                        return;
+                    }
+                    else if (exit.isOpen == false && exit.isContainer == true)
+                    {
+                        Console.WriteLine("Dörren är låst.");
+                        return;
+                    }
+
+                }
+                else if (cmd.Substring(6) != exit.Name)
+                { Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); }
+
             }
         }
         public void PickUp(string cmd)
@@ -239,7 +239,7 @@ namespace AdventureTime
             {
                 Drop(cmd);
             }
-            else if (cmd.Length>= 6 && cmd.Substring(0,6) == "ÖPPNA ")
+            else if (cmd.Length >= 6 && cmd.Substring(0, 6) == "ÖPPNA ")
             {
                 Open(cmd);
             }
@@ -271,34 +271,43 @@ namespace AdventureTime
             {
                 //Console.WriteLine(useWithSplitter[1]);
                 //Console.WriteLine(useWithSplitter[3]);
-                foreach (var item in player.PlayerInventory)
+                Item item1 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[1]); //Hämta det item som stämmer överens med kombinationen
+                Item item2 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[3]); //Hämta det item som stämmer överens med kombinationen
+
+                if(item1 == null || item2 == null)
                 {
-                    //Console.WriteLine(item.Name);
-                    if (useWithSplitter[1] == item.Name)
+                    Console.WriteLine("Du saknar föremål för att utföra det här.");
+                }
+                else
+                {
+                    if (useWithSplitter[1] == item1.Name)
                     {
                         foreach (var exit in player.CurrentRoom.Exits)
                         {
                             //Console.WriteLine(exit);
                             if (useWithSplitter[3] == exit.Name)
                             {
-                                exit.usedWith(useWithSplitter[1]);
+                                exit.usedWith(item1.Name);
                                 return;
                             }
 
                         }
 
-                        foreach (var item2 in player.PlayerInventory)
-                        {
-                            if (useWithSplitter[3] == item2.Name)
-                            {
-                                item2.usedWith(useWithSplitter[1]);
-                                return;
-                            }
 
+                        if (useWithSplitter[3] == item2.Name)
+                        {
+                            var newCombinedItem = item2.usedWith(item1);
+                            if(newCombinedItem != null)
+                            {
+                                player.PlayerInventory.Remove(item1);
+                                player.PlayerInventory.Remove(item2);
+                                player.PlayerInventory.Add(newCombinedItem);
+                            }
+                            return;
                         }
                     }
+                    Console.WriteLine("Tänkte du rätt nu?!");
                 }
-                Console.WriteLine("Tänkte du rätt nu?!");
             }
         }
     }
