@@ -8,34 +8,32 @@ namespace AdventureTime
 {
     public class Game
     {
-        public DateTime dt1 = DateTime.Now;
+        public DateTime dt1 = DateTime.Now; // Spar ned tiden som referens för nedräkning
         public int counter = 600;
         public string countDown;
-        WorldBuilder createWorld = new WorldBuilder();
+        WorldBuilder world = new WorldBuilder();
         Player player = new Player();
 
         public Game()
         {
-            //Console.WriteLine("Welcome to adventure time");
             Console.WriteLine("Du vaknar upp i din säng, lika trött och förvirrad som vanligt \noch undrar vad fan du heter nu igen..");
             Console.Write("Skriv in ditt namn: ");
             player.Name = Console.ReadLine().ToUpper();
             Console.Clear();
             Console.WriteLine($"{player.Name} kollar på klockan och får hjärtat i halsgropen. ");
-            //player.CurrentRoom = createWorld.rooms[0];
-            player.CurrentRoom = createWorld.rooms.Single(x => x.Name == "Sovrum"); // Hämtar det rum som heter "Sovrum", lägger det i current room.
+            
+            player.CurrentRoom = world.rooms.Single(x => x.Name == "Sovrum"); // Hämtar det rum som heter "Sovrum" i listan, lägger det i current room. Objektet som överensstämmer returneras i "single".
 
             bool gameOver = false;
             bool gameWon = false;
-            Timer t = new Timer(TimerCallback, null, 0, 1000);
+            Timer t = new Timer(TimerCallback, null, 0, 1000); //skapar tråd och initierar nedräkning
             dt1 = DateTime.Now + new TimeSpan(0, 0, 10, 0);
-            Thread.Sleep(50); //För att minska risken att WriteLinen under denna sker innan Timer-Printen
+            Thread.Sleep(50); // För att minska risken att WriteLinen under denna sker innan Timer-Printen
             Console.WriteLine("Du flyger upp ur sängen, golvet är kallt.");
-            Console.WriteLine(countDown);//flytta in i första rummets description, bug på om man är snabbare än 1 sekund.
+            Console.WriteLine(countDown);
 
             while (!gameOver && !gameWon)
             {
-                //Console.WriteLine("hello");
                 if (counter <= 0)
                 {
                     Console.WriteLine("Tiden tog slut! Spelet avslutas om 5 sekunder!");
@@ -45,7 +43,7 @@ namespace AdventureTime
                 }
                 if (player.CurrentRoom.YouWon)
                 {
-                    t.Dispose();
+                    t.Dispose(); // När spelaren vinner ska nedräkning termineras
                     Console.Clear();
                     Console.WriteLine("Du vann!!");
                     Console.ReadLine();
@@ -53,7 +51,6 @@ namespace AdventureTime
                 }
                 Command();
             }
-
         }
 
         public void TimerCallback(Object o)//Kör i en separat tråd asynkront, det vill säga parallellt
@@ -61,167 +58,13 @@ namespace AdventureTime
             DateTime dt2 = DateTime.Now;
             TimeSpan t = dt1 - dt2;
             countDown = string.Format("{0}:{1} tills bussen går!", t.Minutes, t.Seconds);
-            //if (t.Seconds != 0 && t.Seconds % 59 == 0)
-            //{
-            //    Console.WriteLine(countDown);
-            //}
             counter--;
-        }
-
-        public void SearchDirection(string cmd)
-        {
-            foreach (var exit in player.CurrentRoom.Exits)
-            {
-
-                if (exit.Direction == cmd)
-                {
-                    if (exit.isOpen == true && exit.isContainer == false)
-                    {
-                        Console.Clear();
-                        player.CurrentRoom = exit.newRoom;
-                        Console.WriteLine(player.Name + " står nu i " + player.CurrentRoom.Name + ".");
-                        return;
-                    }
-                    else if (exit.isOpen == false)
-                    {
-                        Console.WriteLine(exit.Description);
-                        return;
-                    }
-                }
-            }
-
-
-            Console.WriteLine("Du kan ej gå i den riktningen.");
-        }
-
-        public void Open(string cmd)
-        {
-            bool errorMessage = false;
-            foreach (var exit in player.CurrentRoom.Exits)
-            {
-                
-                if (cmd.Substring(6) == exit.Name)
-                {
-
-                    if (exit.isOpen == true && exit.isContainer == true)
-                    {
-                        player.CurrentRoom = exit.newRoom;
-
-
-                        Console.Clear();
-                        Console.WriteLine(player.Name + " Har öppnat " + player.CurrentRoom.Name);
-                        Console.WriteLine(player.CurrentRoom.Name + " innehåll:");
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine("__________________\n");
-                        Console.ResetColor();
-                        foreach (var item2 in player.CurrentRoom.RoomInventory)
-                        {
-                            Console.WriteLine(item2.Name);
-                        }
-
-                        Console.ForegroundColor = ConsoleColor.Blue;
-                        Console.WriteLine("__________________");
-                        Console.ResetColor();
-
-                        return;
-                    }
-                    else if (exit.isOpen == true && exit.isContainer == false)
-                    {
-                        Console.WriteLine("Dörren är öppen.");
-                        errorMessage = true;
-                        return;
-                    }
-                    else if (exit.isOpen == false && exit.isContainer == true)
-                    {
-                        Console.WriteLine("Dörren är låst.");
-                        errorMessage = true;
-                        return;
-                    }
-
-                }
-                //else if (cmd.Substring(6) != exit.Name)
-                //{ Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); }
-
-            }
-            if (!errorMessage)
-            {
-                Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); 
-            }
-        }
-
-        public void PickUp(string cmd)
-        {
-            foreach (var item in player.CurrentRoom.RoomInventory)
-            {
-
-                if (cmd.Substring(7) == item.Name.ToUpper())
-                {
-                    if (item.CanPickUp == true)
-                    {
-                        Console.WriteLine(player.Name + " plockade upp " + item.Name);
-                        player.PlayerInventory.Add(item);
-                        player.CurrentRoom.RoomInventory.Remove(item);
-                        return;
-                    }
-                    else
-                    {
-                        Console.WriteLine("\nDu kan inte plocka upp den där.");
-                        return;
-                    }
-                }
-            }
-            Console.WriteLine("\nDet finns inget där att plocka upp.");
-
-        }
-        public void Drop(string cmd)
-        {
-            foreach (var item in player.PlayerInventory)
-            {
-
-                if (cmd.Substring(6) == item.Name.ToUpper())
-                {
-
-                    Console.WriteLine(player.Name + " kastade ut " + item.Name + ".");
-
-                    player.CurrentRoom.RoomInventory.Add(item);
-                    player.PlayerInventory.Remove(item);
-                    return;
-
-
-                }
-            }
-
-        }
-        public void LookAt(string cmd)
-        {
-            Console.WriteLine();
-            foreach (var item in player.CurrentRoom.RoomInventory)
-            {
-
-                if (cmd.Substring(9) == item.Name.ToUpper())
-                {
-                    Console.WriteLine(item.Description + "\n");
-                    return;
-                }
-            }
-            foreach (var item in player.PlayerInventory)
-            {
-
-                if (cmd.Substring(9) == item.Name.ToUpper())
-                {
-                    Console.WriteLine(item.Description + "\n");
-                    return;
-                }
-            }
-            Console.WriteLine("Det finns inget föremål med beskrivningen" + cmd.Substring(8) + ".");
-
         }
 
         public void Command()
         {
-
             string cmd = Console.ReadLine().ToUpper();
-            string[] useWithSplitter = cmd.Split(' ');
+            string[] useWithSplitter = cmd.Split(' '); // Delar upp cmd för varje mellanslag i array
             if (cmd == "NORR" || cmd == "N")
             {
                 SearchDirection("NORR");
@@ -266,7 +109,7 @@ namespace AdventureTime
             {
                 Console.Clear();
                 player.CurrentRoom.currentDescription();
-                Console.WriteLine(countDown);
+                Console.WriteLine(countDown); //varje gång användaren skriver kolla ska nedräkning synas.
             }
             else if (cmd == "HJÄLP")
             {
@@ -281,12 +124,10 @@ namespace AdventureTime
                 Console.WriteLine("* Stäng      : Stäng föremål.");
                 Console.WriteLine("");
             }
-
-
             else if (useWithSplitter[0] == "ANVÄND" && useWithSplitter[2] == "MED")
             {
-                Item item1 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[1]); //Hämta det item som stämmer överens med kombinationen
-                Item item2 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[3]); //Hämta det item som stämmer överens med kombinationen
+                Item item1 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[1]); //hos playerns inventory, hämta ett item, om det finns, vars namn överensstämmer med arrayen-position 1 eller 3 
+                Item item2 = player.PlayerInventory.SingleOrDefault(x => x.Name == useWithSplitter[3]); //om ett sådant föremål inte finns, sätt item 1 eller 2 till null
 
                 if (item1 == null)
                 {
@@ -298,13 +139,11 @@ namespace AdventureTime
                     {
                         foreach (var exit in player.CurrentRoom.Exits)
                         {
-                            //Console.WriteLine(exit);
                             if (useWithSplitter[3] == exit.Name)
                             {
                                 exit.usedWith(item1.Name);
                                 return;
                             }
-
                         }
                         if (item2 == null)
                         {
@@ -313,10 +152,9 @@ namespace AdventureTime
                         else if (useWithSplitter[3] == item2.Name)
                         {
                             /*Skulle man bara byta ut namn på item.name = till torr strumpa kan man i inventory råka få strykjärn utbytt mot torr stumpa
-                             * istället för blöt strumpa utbytt mot torr strumpa
-                             * därför kan det vara smart att låta båda föremålen bli "förbrukade" och lämna kvar ett nytt föremål */
+                             * istället för blöt strumpa utbytt mot torr strumpa*/
 
-                            var newCombinedItem = item2.usedWith(item1);
+                            Item newCombinedItem = item2.usedWith(item1);
                             if (newCombinedItem != null)
                             {
                                 player.PlayerInventory.Remove(item1);
@@ -329,6 +167,138 @@ namespace AdventureTime
                     Console.WriteLine("Tänkte du rätt nu?!");
                 }
             }
+        }
+
+        public void SearchDirection(string cmd)
+        {
+            foreach (var exit in player.CurrentRoom.Exits)
+            {
+                if (exit.Direction == cmd)
+                {
+                    if (exit.isOpen == true && exit.isContainer == false)
+                    {
+                        Console.Clear();
+                        player.CurrentRoom = exit.newRoom;
+                        Console.WriteLine(player.Name + " står nu i " + player.CurrentRoom.Name + ".");
+                        return;
+                    }
+                    else if (exit.isOpen == false)
+                    {
+                        Console.WriteLine(exit.Description);
+                        return;
+                    }
+                }
+            }
+            Console.WriteLine("Du kan ej gå i den riktningen.");
+        }
+
+        public void Open(string cmd)
+        {
+            bool errorMessage = false;
+            foreach (var exit in player.CurrentRoom.Exits)
+            {
+                if (cmd.Substring(6) == exit.Name)
+                {
+                    if (exit.isOpen == true && exit.isContainer == true)
+                    {
+                        player.CurrentRoom = exit.newRoom;
+
+                        Console.Clear();
+                        Console.WriteLine(player.Name + " har öppnat " + player.CurrentRoom.Name);
+                        Console.WriteLine(player.CurrentRoom.Name + " innehåll:");
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("__________________\n");
+                        Console.ResetColor();
+                        foreach (var item2 in player.CurrentRoom.RoomInventory)
+                        {
+                            Console.WriteLine(item2.Name);
+                        }
+
+                        Console.ForegroundColor = ConsoleColor.Blue;
+                        Console.WriteLine("__________________");
+                        Console.ResetColor();
+
+                        return;
+                    }
+                    else if (exit.isOpen == true && exit.isContainer == false)
+                    {
+                        Console.WriteLine("Dörren är öppen.");
+                        errorMessage = true;
+                        return;
+                    }
+                    else if (exit.isOpen == false && exit.isContainer == true)
+                    {
+                        Console.WriteLine("Dörren är låst.");
+                        errorMessage = true;
+                        return;
+                    }
+                }
+            }
+            if (!errorMessage)
+            {
+                Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); 
+            }
+        }
+
+        public void PickUp(string cmd)
+        {
+            foreach (var item in player.CurrentRoom.RoomInventory)
+            {
+                if (cmd.Substring(7) == item.Name.ToUpper())
+                {
+                    if (item.CanPickUp == true)
+                    {
+                        Console.WriteLine(player.Name + " plockade upp " + item.Name);
+                        player.PlayerInventory.Add(item);
+                        player.CurrentRoom.RoomInventory.Remove(item);
+                        return;
+                    }
+                    else
+                    {
+                        Console.WriteLine("\nDu kan inte plocka upp den där.");
+                        return;
+                    }
+                }
+            }
+            Console.WriteLine("\nDet finns inget där att plocka upp.");
+        }
+
+        public void Drop(string cmd)
+        {
+            foreach (var item in player.PlayerInventory)
+            {
+                if (cmd.Substring(6) == item.Name.ToUpper())
+                {
+                    Console.WriteLine(player.Name + " kastade ut " + item.Name + ".");
+
+                    player.CurrentRoom.RoomInventory.Add(item);
+                    player.PlayerInventory.Remove(item);
+                    return;
+                }
+            }
+        }
+
+        public void LookAt(string cmd)
+        {
+            Console.WriteLine();
+            foreach (var item in player.CurrentRoom.RoomInventory)
+            {
+                if (cmd.Substring(9) == item.Name.ToUpper())
+                {
+                    Console.WriteLine(item.Description + "\n");
+                    return;
+                }
+            }
+
+            foreach (var item in player.PlayerInventory)
+            {
+                if (cmd.Substring(9) == item.Name.ToUpper())
+                {
+                    Console.WriteLine(item.Description + "\n");
+                    return;
+                }
+            }
+            Console.WriteLine("Det finns inget föremål med beskrivningen" + cmd.Substring(8) + ".");
         }
     }
 }

@@ -30,17 +30,5 @@ namespace AdventureTime
 
             return null;
         }
-
-        //OBS måste skriva strykjärn/blöt_strumpa i "rätt ordning"
-        //public void usedWith(string item)
-        //{
-        //    if (item == UsableWith)
-        //    {
-        //        Name = UpdateName;
-        //        Description = UpdateDescription;
-        //        Console.WriteLine("Du satte ihop sakerna.");
-        //    }
-        //    else Console.WriteLine("Det kommer inte att fungera.");
-        //}
     }
 }

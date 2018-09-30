@@ -7,16 +7,17 @@ namespace AdventureTime
 {
     public class Player
     {
-        public List<Item> PlayerInventory { get; set; } 
+        public List<Item> PlayerInventory { get; set; }
+
+        public string Name { get; set; }
+
+        public Room CurrentRoom { get; set; }
 
         public Player ()
         {
             PlayerInventory = new List<Item>();
         }
-        public string Name { get; set; }
-
-        public Room CurrentRoom { get; set; }
-
+        
         public void ShowInventory()
         {
             Console.Clear();
@@ -30,7 +31,5 @@ namespace AdventureTime
             Console.ResetColor();
             
         }
-        public void combine()
-        { }
     }
 }

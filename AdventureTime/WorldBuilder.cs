@@ -14,12 +14,11 @@ namespace AdventureTime
         {
             items = new List<Item>();
             rooms = new List<Room>();
-            BuildWorld();
-
+            BuildWorld(); //kör all kod nedan
         }
+
         public void BuildWorld()
         {
-
             Room roomSovrum = new Room() { Name = "Sovrum", Description = "Det är ditt sovrum, den obäddade sängen står mot \nväggen, bredvid sängen ligger en hög med smutstvätt. \nGenom fönstret sipprar ett svagt ljus in \noch lyser upp stolen med kläder i hörnet." };
             Item kläder = new Item() { Name = "KLÄDER", Description = "Det är en blå skjorta, ett par jeans och EN blå strumpa, \nden andra strumpan saknas..", CanPickUp = true };
             Item stol = new Item() { Name = "STOL", Description = "En ranglig IKEAstol med KLÄDER ovanpå.", CanPickUp = false };
@@ -33,15 +32,13 @@ namespace AdventureTime
             Item matta = new Item() { Name = "MATTA", Description = "Det är en \"Welcome Home\"-matta med röd smutsig text.", CanPickUp = false };
             Item byrå = new Item() { Name = "BYRÅ", Description = "Det är en byrå som du fått av din gamla moster, du \ngillar den inte men hon skulle bli ledsen om \ndu gjorde dig av med den.", CanPickUp = false };
             Item krokar = new Item() { Name = "KROKAR", Description = "Det är två rostiga krokar, på den ena hänger ett \nparaply och den andra, där nyckeln brukar hänga, \när tom.", CanPickUp = false };
-
-
+            
 
             Room roomKök = new Room() { Name = "Kök", Description = "I ena delen av köket står ett köksbord med två stolar, andra sidan finns ett kylskåp och en frys." };
             Item köksbord = new Item() { Name = "KÖKSBORD", Description = "Det är ett runt köksbord, det var ett taktiskt val \ndå du alltid slog i hörnen på ditt förra.", CanPickUp = false };
             Item stolar = new Item() { Name = "STOLAR", Description = "Två stolar i trä som du gjorde på träslöjden i 9an, du är \nfaktiskt ganska stolt över dem.", CanPickUp = false };
             Item kylskåp = new Item() { Name = "KYLSKÅP", Description = "Kylskåpet är mer eller mindre tomt, allt den \ninnehåller är en gammal ketchup som gick ut \nför två månader sen.", CanPickUp = false };
-
-
+            
 
             Room containerFrys = new Room() { Name = "FRYS", Description = "Inuti frysen ligger din hemnyckel och en gammal förpackning med glass." };
             Item nyckel = new Item() { Name = "NYCKEL", Description = "En kantig nyckel i metall.", CanPickUp = true, UsableWith = "YTTERDÖRR" };
@@ -52,8 +49,7 @@ namespace AdventureTime
             Item Tvättmaskin = new Item() { Name = "TVÄTTMASKIN", Description = "Det är en kantstött tvättmaskin som föregående ägare lämnade kvar.", CanPickUp = false };
             Item Tvättkorg = new Item() { Name = "TVÄTTKORG", Description = "Tvättkorgen är sliten och håller på att spricka i sömmarna.", CanPickUp = false };
 
-
-
+            
             Room roomVardagsrum = new Room() { Name = "Vardagsrum", Description = "En soffa och ett litet soffbord med en tidning ovanpå står mot ena väggen, \nmittemot står en stor tv och i hörnet ligger en blöt strumpa." };
             Item Blöt_Strumpa = new Item() { Name = "BLÖT_STRUMPA", Description = "Det är en dyngsur blå strumpa.", CanPickUp = true, UsableWith = "STRYKJÄRN", UpdateName = "TORR_STRUMPA", UpdateDescription = "En fluffig torr strumpa." };
             Item Soffa = new Item() { Name = "SOFFA", Description = "Det är en gul nedsutten soffa.", CanPickUp = false };
@@ -82,8 +78,7 @@ namespace AdventureTime
             Exit tvättstugaToKök = new Exit() { Name = "KÖKSDÖRR", newRoom = roomKök, Direction = "SÖDER", isOpen = true, isContainer = false };
 
             Exit hallToYtterdörr = new Exit() { Name = "YTTERDÖRR", newRoom = roomYtterdörr, Direction = "SÖDER", isOpen = false, isContainer = false, UsableWith = "NYCKEL" };
-
-
+            
 
             //ADD ITEM TO ROOM :
             roomSovrum.RoomInventory.Add(kläder);
@@ -112,25 +107,21 @@ namespace AdventureTime
             roomVardagsrum.RoomInventory.Add(Bord);
             roomVardagsrum.RoomInventory.Add(Tidning);
             roomVardagsrum.RoomInventory.Add(TV);
-
-
-
+            
 
             // ADD EXIT TO ROOM :
-            roomSovrum.Exits.Add(sovrumToHall); //ok
-            roomHall.Exits.Add(hallToSovrum);   //ok
-            roomHall.Exits.Add(hallToVardagsRum);   //ok
+            roomSovrum.Exits.Add(sovrumToHall);         //ok
+            roomHall.Exits.Add(hallToSovrum);           //ok
+            roomHall.Exits.Add(hallToVardagsRum);       //ok
             roomVardagsrum.Exits.Add(vardagsrumToHall); //ok
-            roomKök.Exits.Add(kökToHall);       //ok
-            roomHall.Exits.Add(hallToKök);      //ok
-            roomKök.Exits.Add(kökToFrys);       //ok
-            containerFrys.Exits.Add(frysToKök); //ok
-            roomKök.Exits.Add(kökToTvättstuga); //ok
+            roomKök.Exits.Add(kökToHall);               //ok
+            roomHall.Exits.Add(hallToKök);              //ok
+            roomKök.Exits.Add(kökToFrys);               //ok
+            containerFrys.Exits.Add(frysToKök);         //ok
+            roomKök.Exits.Add(kökToTvättstuga);         //ok
             roomTvättstuga.Exits.Add(tvättstugaToKök);  //ok
-            roomHall.Exits.Add(hallToYtterdörr);   //ok
-
-
-
+            roomHall.Exits.Add(hallToYtterdörr);        //ok
+            
 
             // ADD A ROOM :
             rooms.Add(roomSovrum);
@@ -140,9 +131,6 @@ namespace AdventureTime
             rooms.Add(roomTvättstuga);
             rooms.Add(containerFrys);
             rooms.Add(roomYtterdörr);
-
-
-
         }
     }
 }
