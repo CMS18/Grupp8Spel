@@ -21,7 +21,7 @@ namespace AdventureTime
             Console.Write("Skriv in ditt namn: ");
             player.Name = Console.ReadLine().ToUpper();
             Console.Clear();
-            Console.WriteLine($"{player.Name} kollar på klockan och får hjärat i halsgropen, ");
+            Console.WriteLine($"{player.Name} kollar på klockan och får hjärtat i halsgropen, ");
             //player.CurrentRoom = createWorld.rooms[0];
             player.CurrentRoom = createWorld.rooms.Single(x => x.Name == "Sovrum"); // Hämtar det rum som heter "Sovrum", lägger det i current room.
 
@@ -30,7 +30,7 @@ namespace AdventureTime
             dt1 = DateTime.Now + new TimeSpan(0, 0, 10, 0);
             Thread.Sleep(50); //För att minska risken att WriteLinen under denna sker innan Timer-Printen
             Console.WriteLine("Du flyger upp ur sängen, golvet är kallt.");
-            //Console.WriteLine(countDown);//flytta in i första rummets description, bug på om man är snabbare än 1 sekund.
+            Console.WriteLine(countDown);//flytta in i första rummets description, bug på om man är snabbare än 1 sekund.
 
             while (!gameOver)
             {
@@ -51,10 +51,10 @@ namespace AdventureTime
             DateTime dt2 = DateTime.Now;
             TimeSpan t = dt1 - dt2;
             countDown = string.Format("{0}:{1} tills bussen går!", t.Minutes, t.Seconds);
-            if (t.Seconds != 0 && t.Seconds % 59 == 0)
-            {
-                Console.WriteLine(countDown);
-            }
+            //if (t.Seconds != 0 && t.Seconds % 59 == 0)
+            //{
+            //    Console.WriteLine(countDown);
+            //}
             counter--;
         }
 
