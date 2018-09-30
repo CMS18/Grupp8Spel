@@ -44,10 +44,10 @@ namespace AdventureTime
 
 
             Room containerFrys = new Room() { Name = "FRYS", Description = "Inuti frysen ligger din hemnyckel och en gammal förpackning med glass." };
-            /*nyckeln ska användas på hallToUtgång = */Item nyckel = new Item() { Name = "NYCKEL", Description = "En kantig nyckel i metall.", CanPickUp = true };
+            Item nyckel = new Item() { Name = "NYCKEL", Description = "En kantig nyckel i metall.", CanPickUp = true, UsableWith = "YTTERDÖRR" };
 
 
-            Room roomTvättstuga = new Room() { Name = "Tvättstuga", Description = "Här finns en tvättkorg och en tvättmaskin, på tvättmaskinen står ett strykjärn. " };
+            Room roomTvättstuga = new Room() { Name = "TVÄTTSTUGA", Description = "Här finns en tvättkorg och en tvättmaskin, på tvättmaskinen står ett strykjärn. " };
             Item Strykjärn = new Item() { Name = "STRYKJÄRN", Description = "Det är ett lila strykjärn.", CanPickUp = true, UsableWith = "BLÖT_STRUMPA", UpdateName = "TORR_STRUMPA", UpdateDescription = "En fluffig torr strumpa." };
             Item Tvättmaskin = new Item() { Name = "TVÄTTMASKIN", Description = "Det är en kantstött tvättmaskin som föregående ägare lämnade kvar.", CanPickUp = false };
             Item Tvättkorg = new Item() { Name = "TVÄTTKORG", Description = "Tvättkorgen är sliten och håller på att spricka i sömmarna.", CanPickUp = false };
@@ -62,11 +62,7 @@ namespace AdventureTime
             Item TV = new Item() { Name = "TV", Description = "TVn är förvånansvärt modern med svart tunn ram.", CanPickUp = false };
 
 
-            Room roomUtgång = new Room() { Name = "UTGÅNG", Description = "Du har nu gått ut och hinner därmed i tid till bussen." };
-
-
-            //Item kofot = new Item() { Name = "KOFOT", Description = "En kofot används för att bryta upp dörrar och att dra ut spikar", CanPickUp = true, UsableWith = "TÄNDARE", UpdateName = "ELDFOT", UpdateDescription = "En brinnande kofot" };
-
+            Room roomYtterdörr = new Room() { Name = "DU VANN!!!!", YouWon = true };
 
 
             // Exits vv
@@ -85,7 +81,7 @@ namespace AdventureTime
             Exit kökToTvättstuga = new Exit() { Name = "TVÄTTSTUGEDÖRR", newRoom = roomTvättstuga, Direction = "NORR", isOpen = true, isContainer = false };
             Exit tvättstugaToKök = new Exit() { Name = "KÖKSDÖRR", newRoom = roomKök, Direction = "SÖDER", isOpen = true, isContainer = false };
 
-            /*nyckel ska användas*/ Exit hallToUtgång = new Exit() { Name = "UTGÅNG", newRoom = roomUtgång, Direction = "SÖDER", isOpen = false, isContainer = true, UsableWith = "NYCKEL" };
+            Exit hallToYtterdörr = new Exit() { Name = "YTTERDÖRR", newRoom = roomYtterdörr, Direction = "SÖDER", isOpen = false, isContainer = false, UsableWith = "NYCKEL" };
 
 
 
@@ -106,7 +102,6 @@ namespace AdventureTime
             roomKök.RoomInventory.Add(kylskåp);
 
             roomTvättstuga.RoomInventory.Add(Strykjärn);
-            //roomTvättstuga.RoomInventory.Add(Torr_Strumpa);
             roomTvättstuga.RoomInventory.Add(Tvättmaskin);
             roomTvättstuga.RoomInventory.Add(Tvättkorg);
 
@@ -132,7 +127,7 @@ namespace AdventureTime
             containerFrys.Exits.Add(frysToKök); //ok
             roomKök.Exits.Add(kökToTvättstuga); //ok
             roomTvättstuga.Exits.Add(tvättstugaToKök);  //ok
-            roomHall.Exits.Add(hallToUtgång);   //ok
+            roomHall.Exits.Add(hallToYtterdörr);   //ok
 
 
 
@@ -144,15 +139,10 @@ namespace AdventureTime
             rooms.Add(roomKök);
             rooms.Add(roomTvättstuga);
             rooms.Add(containerFrys);
-            rooms.Add(roomUtgång);
+            rooms.Add(roomYtterdörr);
 
 
 
         }
-
-
-
-
-
     }
 }

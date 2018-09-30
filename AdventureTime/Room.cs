@@ -19,6 +19,8 @@ namespace AdventureTime
 
         public string Description { get; set; }
 
+        public bool YouWon { get; set; }
+
         public void currentDescription()
         {
 

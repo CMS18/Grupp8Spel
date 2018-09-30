@@ -21,18 +21,19 @@ namespace AdventureTime
             Console.Write("Skriv in ditt namn: ");
             player.Name = Console.ReadLine().ToUpper();
             Console.Clear();
-            Console.WriteLine($"{player.Name} kollar på klockan och får hjärtat i halsgropen, ");
+            Console.WriteLine($"{player.Name} kollar på klockan och får hjärtat i halsgropen. ");
             //player.CurrentRoom = createWorld.rooms[0];
             player.CurrentRoom = createWorld.rooms.Single(x => x.Name == "Sovrum"); // Hämtar det rum som heter "Sovrum", lägger det i current room.
 
             bool gameOver = false;
+            bool gameWon = false;
             Timer t = new Timer(TimerCallback, null, 0, 1000);
             dt1 = DateTime.Now + new TimeSpan(0, 0, 10, 0);
             Thread.Sleep(50); //För att minska risken att WriteLinen under denna sker innan Timer-Printen
             Console.WriteLine("Du flyger upp ur sängen, golvet är kallt.");
             Console.WriteLine(countDown);//flytta in i första rummets description, bug på om man är snabbare än 1 sekund.
 
-            while (!gameOver)
+            while (!gameOver && !gameWon)
             {
                 //Console.WriteLine("hello");
                 if (counter <= 0)
@@ -42,8 +43,17 @@ namespace AdventureTime
                     Thread.Sleep(5000);
                     break;
                 }
+                if (player.CurrentRoom.YouWon)
+                {
+                    t.Dispose();
+                    Console.Clear();
+                    Console.WriteLine("Du vann!!");
+                    Console.ReadLine();
+                    break;
+                }
                 Command();
             }
+
         }
 
         public void TimerCallback(Object o)//Kör i en separat tråd asynkront, det vill säga parallellt
@@ -86,12 +96,10 @@ namespace AdventureTime
 
         public void Open(string cmd)
         {
-
+            bool errorMessage = false;
             foreach (var exit in player.CurrentRoom.Exits)
             {
-
-
-
+                
                 if (cmd.Substring(6) == exit.Name)
                 {
 
@@ -120,20 +128,27 @@ namespace AdventureTime
                     else if (exit.isOpen == true && exit.isContainer == false)
                     {
                         Console.WriteLine("Dörren är öppen.");
+                        errorMessage = true;
                         return;
                     }
                     else if (exit.isOpen == false && exit.isContainer == true)
                     {
                         Console.WriteLine("Dörren är låst.");
+                        errorMessage = true;
                         return;
                     }
 
                 }
-                else if (cmd.Substring(6) != exit.Name)
-                { Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); }
+                //else if (cmd.Substring(6) != exit.Name)
+                //{ Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); }
 
             }
+            if (!errorMessage)
+            {
+                Console.WriteLine("Är du säker på att du angav rätt föremål att öppna."); 
+            }
         }
+
         public void PickUp(string cmd)
         {
             foreach (var item in player.CurrentRoom.RoomInventory)
@@ -262,6 +277,8 @@ namespace AdventureTime
                 Console.WriteLine("* Använd Med : Använder angivet föremål 1 Med angivet föremål 2.");
                 Console.WriteLine("* Kolla      : Ger spelaren en rumsbeskrivning.");
                 Console.WriteLine("* Kolla På   : Ger spelaren en beskrivning av angivet föremål.");
+                Console.WriteLine("* Öppna      : Öppnar angivet föremål.");
+                Console.WriteLine("* Stäng      : Stäng föremål.");
                 Console.WriteLine("");
             }
 
@@ -295,7 +312,7 @@ namespace AdventureTime
                         }
                         else if (useWithSplitter[3] == item2.Name)
                         {
-                            /*Skulle man bara byta ut namn på item.name = till trorr strumpa kan man i inventory råka få strykjärn utbytt mot torr stumpa
+                            /*Skulle man bara byta ut namn på item.name = till torr strumpa kan man i inventory råka få strykjärn utbytt mot torr stumpa
                              * istället för blöt strumpa utbytt mot torr strumpa
                              * därför kan det vara smart att låta båda föremålen bli "förbrukade" och lämna kvar ett nytt föremål */
 
@@ -312,49 +329,6 @@ namespace AdventureTime
                     Console.WriteLine("Tänkte du rätt nu?!");
                 }
             }
-
-            //Sparar Gamla koden
-            //else if (useWithSplitter[0] == "ANVÄND" && useWithSplitter[2] == "MED")
-            //{
-            //    //Console.WriteLine(useWithSplitter[1]);
-            //    //Console.WriteLine(useWithSplitter[3]);
-            //    foreach (var item in player.PlayerInventory)
-            //    {
-            //        //Console.WriteLine(item.Name);
-            //        if (useWithSplitter[1] == item.Name)
-            //        {
-            //            foreach (var exit in player.CurrentRoom.Exits)
-            //            {
-            //                //Console.WriteLine(exit);
-            //                if (useWithSplitter[3] == exit.Name)
-            //                {
-            //                    exit.usedWith(useWithSplitter[1]);
-            //                    return;
-            //                }
-
-            //            }
-
-            //            foreach (var item2 in player.PlayerInventory)
-            //            {
-            //                if (useWithSplitter[3] == item2.Name)
-            //                {
-            //                    item2.usedWith(useWithSplitter[1]);
-            //                    return;
-            //                }
-
-            //            }
-            //        }
-            //    }
-            //    Console.WriteLine("Tänkte du rätt nu?!");
-            //}
-
-
-
-
-
-
-
-
         }
     }
 }
